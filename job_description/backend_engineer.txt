@@ -1,0 +1,13 @@
+Senior Backend Engineer
+
+Required Qualifications:
+- 3+ years backend development experience
+- Python or Java
+- REST API development
+- PostgreSQL or MySQL
+- Cloud platforms (AWS/GCP/Azure)
+
+Nice to Have:
+- Docker/Kubernetes
+- Microservices architecture
+- Generative AI or LLM knowledge

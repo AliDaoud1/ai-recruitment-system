@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Logs & audits
+logs/
+audits/
+*.log
+
+# Data (optional but recommended if contains CVs)
+data/
+
+# IDE
+.vscode/
+.idea/

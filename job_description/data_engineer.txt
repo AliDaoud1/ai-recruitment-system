@@ -1,0 +1,13 @@
+Data Engineer
+
+Required Qualifications:
+- Python
+- SQL
+- ETL pipelines
+- Data warehousing
+- Cloud data platforms
+
+Nice to Have:
+- Spark
+- Machine learning pipelines
+- Airflow

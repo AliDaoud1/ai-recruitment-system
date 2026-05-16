@@ -1,0 +1,13 @@
+Mobile Engineer
+
+Required Qualifications:
+- Android or iOS development experience
+- Kotlin, Swift, or Flutter
+- REST API integration
+- App deployment experience
+- UI/UX implementation
+
+Nice to Have:
+- Firebase
+- Cross-platform frameworks
+- Team leadership

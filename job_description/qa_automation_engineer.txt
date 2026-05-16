@@ -1,0 +1,13 @@
+QA Automation Engineer
+
+Required Qualifications:
+- Automated testing experience
+- Selenium/Cypress/Playwright
+- API testing
+- CI/CD
+- Python or Java
+
+Nice to Have:
+- Security testing
+- Performance testing
+- Cloud infrastructure

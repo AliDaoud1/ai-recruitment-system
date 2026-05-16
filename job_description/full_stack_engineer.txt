@@ -1,0 +1,13 @@
+Full Stack Engineer
+
+Required Qualifications:
+- 3+ years full stack development
+- React or Angular
+- Node.js, Java, or Python backend
+- SQL or NoSQL databases
+- Git and CI/CD pipelines
+
+Nice to Have:
+- AWS
+- Cybersecurity knowledge
+- Startup experience
