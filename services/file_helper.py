@@ -1,5 +1,6 @@
 import fitz  # PyMuPDF python -m pip install pymupdf
 import re
+import json
 from pathlib import Path
 
 class PDFLoader:
@@ -30,3 +31,16 @@ def resolve_candidate_file(candidate: str, data_dir: Path) -> str | None:
             return str(path.name)   # or str(path) if you prefer full path
 
     return None
+
+def safe_json_load(raw: str):
+    raw = raw.strip()
+
+    # remove markdown fences
+    raw = re.sub(r"```json|```", "", raw)
+
+    # extract first JSON block
+    match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if match:
+        raw = match.group(0)
+
+    return json.loads(raw)

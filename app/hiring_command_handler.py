@@ -1,5 +1,5 @@
 import json
-
+from services.file_helper import safe_json_load
 
 class HiringCommandHandler:
     def __init__(self, container, store):
@@ -26,7 +26,7 @@ class HiringCommandHandler:
                     raise ValueError("Empty response from agent.score_candidate")
 
                 try:
-                    raw = json.loads(raw)
+                    raw = safe_json_load(raw)
                 except json.JSONDecodeError:
                     raise ValueError(f"Invalid JSON from LLM:\n{raw}")
 
