@@ -263,7 +263,25 @@ linkedin.com/in/example
 
 ---
 
+# 📁 Sample Inputs
 
+The system includes sample input data used for testing both the CV Analyser and Hiring Agent.
+
+## 📄 Job Descriptions
+
+The `job_description/` folder contains example job requirements used by the Hiring Agent for candidate scoring and comparison.
+
+These files simulate real-world job postings and help evaluate:
+- Technical fit
+- Experience level
+- Required skills
+- Startup / role alignment
+
+## 📄 CV Data
+
+The `data/` folder contains sample CVs used by the CV Analyser system for retrieval, summarization, and skill extraction.
+
+> ⚠️ Note: All data is synthetic or anonymized and used only for demonstration purposes.
 # 📌 Example Recruiter Query
 
 ```text
