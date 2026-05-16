@@ -13,11 +13,7 @@ venv/
 
 # Logs & audits
 logs/
-audits/
 *.log
-
-# Data (optional but recommended if contains CVs)
-data/
 
 # IDE
 .vscode/
