@@ -119,12 +119,12 @@ class CVPrompts:
 
     SCHEMA:
     {
-      "name": string,
+      "name": "...",
       "technical": integer (1-10),
       "experience": integer (1-10),
       "nice_to_have": integer (1-10),
       "total": integer,
-      "reason": string (max 4 lines)
+      "reason": "..."
     }
 
     LOGIC RULES:

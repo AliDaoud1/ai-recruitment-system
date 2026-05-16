@@ -1,7 +1,4 @@
 from logging import Logger
-import re
-from pathlib import Path
-
 from langchain_core.messages import HumanMessage, SystemMessage
 from base.agent_base import AgentBase
 from services.document_store import DocumentStore
@@ -10,6 +7,19 @@ from services.cv_prompts import CVPrompts
 
 
 class CVAnalyserAgent(AgentBase):
+    """
+    CV Analyser Agent (RAG-powered CV intelligence system)
+
+    Responsibilities:
+    - Semantic search across CVs using RAG
+    - Conversational Q&A over CV data
+    - CV summarization and skill extraction
+    - Section-level CV improvement
+    - Optional MMR (diversity-based retrieval)
+
+    This agent is part of the Dual-System AI Recruitment Architecture.
+    """
+
     def __init__(self, client: LlmClient, store: DocumentStore, logger: Logger):
         self._llm = client
         self._store = store
@@ -19,12 +29,23 @@ class CVAnalyserAgent(AgentBase):
         self._use_mmr = False
 
     def toggle_mmr(self) -> None:
+        """
+        Toggles retrieval mode between:
+        - Standard similarity search
+        - MMR (Max Marginal Relevance) for diverse results
+        """
         self._use_mmr = not self._use_mmr
         self._logger.info(f"MMR toggled -> {self._use_mmr}")
 
-
     # ---------------- core helpers ----------------
     def _retrieve(self, query: str, top_k: int, source: str | None = None):
+        """
+        Retrieves relevant CV chunks from vector store.
+
+        Flow:
+        - Applies MMR or similarity search
+        - Optionally filters by CV file source
+        """
         self._logger.info(
             f"[cv_analyser_agent] retrieve query='{query}' mmr={self._use_mmr}"
         )
@@ -43,12 +64,18 @@ class CVAnalyserAgent(AgentBase):
         return results
 
     def _build_context(self, results) -> str:
+        """
+        Builds formatted context string from retrieved CV chunks.
+        """
         return "\n\n".join(
             f"[{r.document.metadata.get('source', '?')}]\n{r.document.page_content}"
             for r in results
         )
 
     def _ask_llm(self, prompt: str, context: str):
+        """
+        Sends structured prompt + context to LLM and returns response.
+        """
         messages = [
             SystemMessage(content=CVPrompts.SYSTEM),
             HumanMessage(content=f"{prompt}\n\n{context}")
@@ -56,6 +83,19 @@ class CVAnalyserAgent(AgentBase):
         return self._llm.invoke(messages)
 
     def chat(self, question: str, memory_context: str = ""):
+        """
+        Conversational Q&A over CV dataset.
+
+        Uses:
+        - Vector retrieval (RAG)
+        - Optional memory context
+        - LLM reasoning over combined context
+
+        Returns:
+        - answer (str)
+        - retrieved documents
+        - flag indicating CV context usage
+        """
         results = self._retrieve(question, top_k=4)
         context = self._build_context(results)
         full_context = f"""
@@ -73,6 +113,9 @@ class CVAnalyserAgent(AgentBase):
         return answer, results, True if '.pdf' in answer else False
 
     def summary(self, file_name: str):
+        """
+        Generates a full structured summary of a CV.
+        """
         self._logger.info(f"[summary] file={file_name}")
         results = self._retrieve(
             "summary",
@@ -84,6 +127,9 @@ class CVAnalyserAgent(AgentBase):
         return answer, results
 
     def skills(self, file_name: str):
+        """
+        Extracts technical and soft skills from a CV.
+        """
         self._logger.info(f"[skills] file={file_name}")
         # retrieve directly from file source
         results = self._retrieve(
@@ -96,6 +142,9 @@ class CVAnalyserAgent(AgentBase):
         return answer, results
 
     def improve_section(self, file_name: str, section: str):
+        """
+        Improves a specific section of a CV (e.g. experience, summary).
+        """
         self._logger.info(f"[improve] file={file_name} section={section}")
         results = self._retrieve(
             f"{section}",
@@ -110,4 +159,7 @@ class CVAnalyserAgent(AgentBase):
         return answer, results
 
     def reset(self) -> None:
+        """
+        Resets analyser state (used when session is cleared).
+        """
         self._logger.info("[cv_analyser_agent] Reset called")
